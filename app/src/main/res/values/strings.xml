@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ChuckNorrisFacts</string>
+
+    <!-- Joke Card RV -->
+    <string name="joke_value">"Some joke should appear here"</string>
+    <string name="joke_category">"Category"</string>
 </resources>
