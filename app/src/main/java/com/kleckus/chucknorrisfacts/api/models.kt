@@ -11,3 +11,5 @@ data class JokeResult(
 )
 
 data class Categories (val categoryList: MutableList<String>)
+
+data class QueryResult(val total : Int, val result : MutableList<JokeResult>)

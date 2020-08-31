@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 private const val BASE_URL = "https://api.chucknorris.io/jokes/"
 
-class ChuckNorrisApi(){
+class ChuckNorrisApi{
     var service : APIDef
     init {
         val gson = GsonBuilder().setLenient().create()
@@ -25,6 +25,14 @@ class ChuckNorrisApi(){
 
     fun getRandomJoke() : Observable<Joke>{
         return service.getRandomJoke().flatMap { jokeResult ->
+            Observable.just(Joke(jokeResult.value, jokeResult.categories ,jokeResult.url))
+        }
+    }
+
+    fun queryForJoke(query : String) : Observable<Joke>{
+        return service.queryForJoke(query).flatMap { queryResult ->
+            Observable.fromIterable(queryResult.result)
+        }.flatMap { jokeResult ->
             Observable.just(Joke(jokeResult.value, jokeResult.categories ,jokeResult.url))
         }
     }

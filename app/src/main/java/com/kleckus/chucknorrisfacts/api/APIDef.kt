@@ -17,5 +17,8 @@ interface APIDef {
     fun getRandomJokeFrom(@Path("category") category : String) : Observable<JokeResult>
 
     @GET(CATEGORIES_ENDPOINT)
-    fun getAvailableCategories() : MutableList<String>
+    fun getAvailableCategories() : Observable<MutableList<String>>
+
+    @GET(QUERY_ENDPOINT)
+    fun queryForJoke(@Path("query") query : String) : Observable<QueryResult>
 }
