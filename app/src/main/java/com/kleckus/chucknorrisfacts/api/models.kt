@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class JokeResult(
     @SerializedName("icon_url") val iconUrl : String,
     val id : String,
+    val categories : MutableList<String>,
     val url : String,
     val value : String
 )

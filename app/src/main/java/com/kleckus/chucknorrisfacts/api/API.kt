@@ -8,6 +8,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 private const val BASE_URL = "https://api.chucknorris.io/jokes/"
+
 class ChuckNorrisApi(){
     var service : APIDef
     init {
@@ -24,7 +25,7 @@ class ChuckNorrisApi(){
 
     fun getRandomJoke() : Observable<Joke>{
         return service.getRandomJoke().flatMap { jokeResult ->
-            Observable.just(Joke(jokeResult.value, jokeResult.url))
+            Observable.just(Joke(jokeResult.value, jokeResult.categories ,jokeResult.url))
         }
     }
 
