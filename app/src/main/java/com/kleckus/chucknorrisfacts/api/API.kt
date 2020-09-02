@@ -9,6 +9,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 private const val BASE_URL = "https://api.chucknorris.io/jokes/"
+const val API_URL = "api.chucknorris.io"
 
 class ChuckNorrisApi{
     var service : APIDef

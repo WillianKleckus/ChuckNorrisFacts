@@ -41,7 +41,6 @@ class JokeAdapter : RecyclerView.Adapter<JokeAdapter.VH>(){
 
         card.tvJokeValue.text = currentJoke.jokeStr
         card.tvJokeCategory.text = currentJoke.categoriesStr
-
         card.shareButton.setOnClickListener { share(currentJoke) }
     }
 

@@ -8,10 +8,13 @@ import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kleckus.chucknorrisfacts.R
 import com.kleckus.chucknorrisfacts.system.ChuckNorrisSystem
+import com.kleckus.chucknorrisfacts.system.ChuckNorrisSystem.Companion.shareJoke
+import com.kleckus.chucknorrisfacts.system.Joke
 import com.kleckus.chucknorrisfacts.system.JokeAdapter
 import com.kleckus.chucknorrisfacts.system.Util.Companion.log
 import com.kleckus.chucknorrisfacts.system.Util.Companion.onFinnish
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.joke_card.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,13 +24,18 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        initializeLayout()
-        initializeRV()
+        initialize()
 
         svBar.onFinnish{text ->
             clearMessages()
             queryForJoke(text)
         }
+    }
+
+    private fun initialize(){
+        ChuckNorrisSystem.currentContext = this
+        initializeLayout()
+        initializeRV()
     }
 
     private fun initializeLayout(){
@@ -37,6 +45,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initializeRV(){
         rvAdapter = JokeAdapter()
+        rvAdapter.share = ::shareJoke
         rvJokeCard.adapter = rvAdapter
         rvJokeCard.layoutManager = LinearLayoutManager(this)
     }
