@@ -40,9 +40,10 @@ class ChuckNorrisSystem : Application(){
             loadedJokeResults.forEach { jokeResult ->
                 if(jokeResult.value == joke.jokeStr){
                     doShare(jokeResult)
+                    return
                 }
-                else log("Something went wrong")
             }
+            log("Something went wrong")
         }
 
         private fun doShare(jokeResult: JokeResult){
