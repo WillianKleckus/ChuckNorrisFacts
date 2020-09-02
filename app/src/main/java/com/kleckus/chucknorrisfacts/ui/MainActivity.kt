@@ -4,17 +4,12 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kleckus.chucknorrisfacts.R
 import com.kleckus.chucknorrisfacts.system.ChuckNorrisSystem
 import com.kleckus.chucknorrisfacts.system.ChuckNorrisSystem.Companion.shareJoke
-import com.kleckus.chucknorrisfacts.system.Joke
-import com.kleckus.chucknorrisfacts.system.JokeAdapter
-import com.kleckus.chucknorrisfacts.system.Util.Companion.log
 import com.kleckus.chucknorrisfacts.system.Util.Companion.onFinnish
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.joke_card.*
 
 class MainActivity : AppCompatActivity() {
 

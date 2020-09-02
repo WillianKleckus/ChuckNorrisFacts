@@ -2,7 +2,7 @@ package com.kleckus.chucknorrisfacts.api
 
 import com.google.gson.GsonBuilder
 import com.kleckus.chucknorrisfacts.system.ChuckNorrisSystem
-import com.kleckus.chucknorrisfacts.system.Joke
+import com.kleckus.chucknorrisfacts.ui.Joke
 import io.reactivex.Observable
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -30,7 +30,12 @@ class ChuckNorrisApi{
         return getListJokeResults(query)
             .flatMap { jokeResult ->
                 ChuckNorrisSystem.addToLoadedJokeResults(jokeResult)
-                Observable.just(Joke(jokeResult.value, jokeResult.categories))
+                Observable.just(
+                    Joke(
+                        jokeResult.value,
+                        jokeResult.categories
+                    )
+                )
         }
     }
 

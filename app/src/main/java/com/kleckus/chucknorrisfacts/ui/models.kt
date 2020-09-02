@@ -1,4 +1,4 @@
-package com.kleckus.chucknorrisfacts.system
+package com.kleckus.chucknorrisfacts.ui
 
 import android.view.LayoutInflater
 import android.view.View

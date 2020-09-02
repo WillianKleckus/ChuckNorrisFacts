@@ -10,9 +10,9 @@ import com.kleckus.chucknorrisfacts.api.API_URL
 import com.kleckus.chucknorrisfacts.api.ChuckNorrisApi
 import com.kleckus.chucknorrisfacts.api.JokeResult
 import com.kleckus.chucknorrisfacts.system.Util.Companion.log
+import com.kleckus.chucknorrisfacts.ui.Joke
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlin.coroutines.coroutineContext
 
 class ChuckNorrisSystem : Application(){
     companion object{
