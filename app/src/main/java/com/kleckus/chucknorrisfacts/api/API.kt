@@ -2,6 +2,8 @@ package com.kleckus.chucknorrisfacts.api
 
 import com.google.gson.GsonBuilder
 import com.kleckus.chucknorrisfacts.system.ChuckNorrisSystem
+import com.kleckus.chucknorrisfacts.system.Environment
+import com.kleckus.chucknorrisfacts.system.SysEnvironment
 import com.kleckus.chucknorrisfacts.ui.Joke
 import io.reactivex.Observable
 import retrofit2.Retrofit
@@ -11,38 +13,64 @@ import retrofit2.converter.gson.GsonConverterFactory
 private const val BASE_URL = "https://api.chucknorris.io/jokes/"
 const val API_URL = "api.chucknorris.io"
 
-class ChuckNorrisApi{
-    var service : APIDef
-    init {
-        val gson = GsonBuilder().setLenient().create()
+interface ChuckNorrisApi{
+    fun queryForJoke(query : String) : Observable<Joke>
+}
 
-        val retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .build()
+class FactoryCNApi{
+    companion object{
+        fun createApi() : ChuckNorrisApi {
+            return when(SysEnvironment.currentEnvironment){
+                Environment.TESTING -> mockedApi
+                else -> realApi
+            }
+        }
 
-        service = retrofit.create<APIDef>(APIDef::class.java)
-    }
+        private val mockedApi = object : ChuckNorrisApi{
+            override fun queryForJoke(query: String): Observable<Joke> {
+                ChuckNorrisSystem.clearLoadedJokeResults()
+                return getJokeResults(query).flatMap { jokeResult ->
+                    ChuckNorrisSystem.addToLoadedJokeResults(jokeResult)
+                    Observable.just(Joke(jokeResult.value, jokeResult.categories))
+                }
+            }
 
-    fun queryForJoke(query : String) : Observable<Joke>{
-        ChuckNorrisSystem.clearLoadedJokeResults()
-        return getListJokeResults(query)
-            .flatMap { jokeResult ->
-                ChuckNorrisSystem.addToLoadedJokeResults(jokeResult)
-                Observable.just(
-                    Joke(
-                        jokeResult.value,
-                        jokeResult.categories
-                    )
-                )
+            private fun getJokeResults(query : String) : Observable<JokeResult>{
+                return MockedApi.queryForJoke(query).flatMap {queryResult ->
+                    Observable.fromIterable(queryResult.result)
+                }
+            }
+        }
+
+        private val realApi = object : ChuckNorrisApi{
+            private val service : APIDef = establishService()
+
+            private fun establishService() : APIDef{
+                val gson = GsonBuilder().setLenient().create()
+
+                val retrofit = Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .build()
+
+                return retrofit.create<APIDef>(APIDef::class.java)
+            }
+
+            private fun getJokeResults(query : String) : Observable<JokeResult>{
+                return service.queryForJoke(query).flatMap { queryResult ->
+                    Observable.fromIterable(queryResult.result)
+                }
+            }
+
+            override fun queryForJoke(query : String) : Observable<Joke>{
+                ChuckNorrisSystem.clearLoadedJokeResults()
+                return getJokeResults(query)
+                    .flatMap { jokeResult ->
+                        ChuckNorrisSystem.addToLoadedJokeResults(jokeResult)
+                        Observable.just(Joke(jokeResult.value, jokeResult.categories))
+                    }
+            }
         }
     }
-
-    private fun getListJokeResults(query : String) : Observable<JokeResult>{
-        return service.queryForJoke(query).flatMap { queryResult ->
-            Observable.fromIterable(queryResult.result)
-        }
-    }
-
 }

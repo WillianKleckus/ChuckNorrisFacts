@@ -8,6 +8,7 @@ import android.util.Log
 import androidx.appcompat.widget.SearchView
 import com.kleckus.chucknorrisfacts.api.API_URL
 import com.kleckus.chucknorrisfacts.api.ChuckNorrisApi
+import com.kleckus.chucknorrisfacts.api.FactoryCNApi
 import com.kleckus.chucknorrisfacts.api.JokeResult
 import com.kleckus.chucknorrisfacts.system.Util.Companion.log
 import com.kleckus.chucknorrisfacts.ui.Joke
@@ -17,7 +18,7 @@ import io.reactivex.schedulers.Schedulers
 class ChuckNorrisSystem : Application(){
     companion object{
         var currentContext : Context? = null
-        private val api = ChuckNorrisApi()
+        private val api = FactoryCNApi.createApi()
         private val loadedJokeResults = mutableListOf<JokeResult>()
 
         @SuppressLint("CheckResult")
