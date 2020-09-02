@@ -1,6 +1,7 @@
 package com.kleckus.chucknorrisfacts.api
 
 import com.google.gson.GsonBuilder
+import com.kleckus.chucknorrisfacts.system.ChuckNorrisSystem
 import com.kleckus.chucknorrisfacts.system.Joke
 import io.reactivex.Observable
 import retrofit2.Retrofit
@@ -23,17 +24,18 @@ class ChuckNorrisApi{
         service = retrofit.create<APIDef>(APIDef::class.java)
     }
 
-    fun getRandomJoke() : Observable<Joke>{
-        return service.getRandomJoke().flatMap { jokeResult ->
-            Observable.just(Joke(jokeResult.value, jokeResult.categories ,jokeResult.url))
+    fun queryForJoke(query : String) : Observable<Joke>{
+        ChuckNorrisSystem.clearLoadedJokeResults()
+        return getListJokeResults(query)
+            .flatMap { jokeResult ->
+                ChuckNorrisSystem.addToLoadedJokeResults(jokeResult)
+                Observable.just(Joke(jokeResult.value, jokeResult.categories))
         }
     }
 
-    fun queryForJoke(query : String) : Observable<Joke>{
+    private fun getListJokeResults(query : String) : Observable<JokeResult>{
         return service.queryForJoke(query).flatMap { queryResult ->
             Observable.fromIterable(queryResult.result)
-        }.flatMap { jokeResult ->
-            Observable.just(Joke(jokeResult.value, jokeResult.categories ,jokeResult.url))
         }
     }
 

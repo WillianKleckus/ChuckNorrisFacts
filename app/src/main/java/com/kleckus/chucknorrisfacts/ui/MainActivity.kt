@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.kleckus.chucknorrisfacts.R
 import com.kleckus.chucknorrisfacts.system.ChuckNorrisSystem
 import com.kleckus.chucknorrisfacts.system.JokeAdapter
+import com.kleckus.chucknorrisfacts.system.Util.Companion.log
 import com.kleckus.chucknorrisfacts.system.Util.Companion.onFinnish
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -46,7 +47,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun queryForJoke(text : String){
-        ChuckNorrisSystem.apiCalls.queryForJoke(text){ jokeList ->
+        ChuckNorrisSystem.queryForJoke(text){ jokeList ->
             if(jokeList.isEmpty()) showNoResultsMessage()
             rvAdapter.changeDataSet(jokeList)
         }

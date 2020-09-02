@@ -5,41 +5,31 @@ import android.app.Application
 import android.util.Log
 import androidx.appcompat.widget.SearchView
 import com.kleckus.chucknorrisfacts.api.ChuckNorrisApi
+import com.kleckus.chucknorrisfacts.api.JokeResult
 import com.kleckus.chucknorrisfacts.system.Util.Companion.log
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 class ChuckNorrisSystem : Application(){
     companion object{
-        val apiCalls = APICalls()
-    }
-}
+        private val api = ChuckNorrisApi()
+        private val loadedJokeResults = mutableListOf<JokeResult>()
 
-class APICalls{
-    private val api = ChuckNorrisApi()
+        @SuppressLint("CheckResult")
+        fun queryForJoke(text : String, then : (jokeList : MutableList<Joke>) -> Unit){
+            val jokeList = mutableListOf<Joke>()
+            api.queryForJoke(text)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { joke -> jokeList.add(joke) },
+                    { error -> log(error.message.toString()) },
+                    { then(jokeList)}
+                )
+        }
 
-    @SuppressLint("CheckResult")
-    fun getRandomJoke(andThen : (joke : Joke) -> Unit){
-        api.getRandomJoke()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { joke -> andThen(joke) },
-                { error -> log(error.message.toString()) }
-            )
-    }
-
-    @SuppressLint("CheckResult")
-    fun queryForJoke(string : String, andThen : (joke : MutableList<Joke>) -> Unit){
-        val jokeList = mutableListOf<Joke>()
-        api.queryForJoke(string)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { joke -> jokeList.add(joke) },
-                { error -> log(error.message.toString()) },
-                { andThen(jokeList)}
-            )
+        fun clearLoadedJokeResults(){ loadedJokeResults.clear() }
+        fun addToLoadedJokeResults(jokeResult : JokeResult){ loadedJokeResults.add(jokeResult) }
     }
 }
 
