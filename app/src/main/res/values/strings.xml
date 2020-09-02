@@ -5,7 +5,12 @@
     <string name="joke_value">"Some joke should appear here"</string>
     <string name="joke_category">"Category"</string>
 
-    <!-- Buttonn -->
+    <!-- Button -->
     <string name="get_random_tv">"Get a random fact"</string>
+
+    <!-- UI Messages -->
+    <string name="no_results_tv">"Sorry, here were no results... Try searching for something else"</string>
+    <string name="initial_message_tv">"Search for something about our dear Chucky"</string>
+
 
 </resources>

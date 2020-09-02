@@ -3,6 +3,7 @@ package com.kleckus.chucknorrisfacts.ui
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kleckus.chucknorrisfacts.R
@@ -19,21 +20,40 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        initializeLayout()
+        initializeRV()
+
+        svBar.onFinnish{text ->
+            clearMessages()
+            queryForJoke(text)
+        }
+    }
+
+    private fun initializeLayout(){
+        initialMessage.visibility = View.VISIBLE
+        noResultsWindow.visibility = View.GONE
+    }
+
+    private fun initializeRV(){
         rvAdapter = JokeAdapter()
         rvJokeCard.adapter = rvAdapter
         rvJokeCard.layoutManager = LinearLayoutManager(this)
+    }
 
-        refreshButton.setOnClickListener { getRandomJoke() }
-        svBar.onFinnish{text ->
-            ChuckNorrisSystem.apiCalls.queryForJoke(text){ jokeList ->
-                rvAdapter.changeDataSet(jokeList)
-            }
+    private fun clearMessages(){
+        initialMessage.visibility = View.GONE
+        noResultsWindow.visibility = View.GONE
+    }
+
+    private fun queryForJoke(text : String){
+        ChuckNorrisSystem.apiCalls.queryForJoke(text){ jokeList ->
+            if(jokeList.isEmpty()) showNoResultsMessage()
+            rvAdapter.changeDataSet(jokeList)
         }
     }
-    
-    private fun getRandomJoke(){
-        ChuckNorrisSystem.apiCalls.getRandomJoke{ joke ->
-            rvAdapter.changeDataSet(mutableListOf(joke))
-        }
+
+    private fun showNoResultsMessage() {
+        rvAdapter.changeDataSet(mutableListOf())
+        noResultsWindow.visibility = View.VISIBLE
     }
 }
