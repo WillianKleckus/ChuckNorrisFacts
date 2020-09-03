@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.content.Intent
-import android.util.Log
-import androidx.appcompat.widget.SearchView
 import com.kleckus.chucknorrisfacts.api.API_URL
 import com.kleckus.chucknorrisfacts.api.FactoryCNApi
 import com.kleckus.chucknorrisfacts.api.JokeResult
@@ -17,7 +15,7 @@ import io.reactivex.schedulers.Schedulers
 class ChuckNorrisSystem : Application(){
     companion object{
         var currentContext : Context? = null
-        private val api = FactoryCNApi.createApi()
+        private val api = FactoryCNApi.createApi(Environment.PRODUCTION)
         private val loadedJokeResults = mutableListOf<JokeResult>()
 
         @SuppressLint("CheckResult")
@@ -60,27 +58,6 @@ class ChuckNorrisSystem : Application(){
             }
             val shareIntent = Intent.createChooser(sendIntent, null)
             currentContext!!.startActivity(shareIntent)
-        }
-    }
-}
-
-// Mostly stuff to reduce boilerplate code
-class Util{
-    companion object{
-        fun log(string : String){
-            Log.i("CN", string)
-        }
-
-        fun SearchView.onFinnish(doSomething : (text : String) -> Unit){
-            this.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextChange(newText: String): Boolean {
-                    return false
-                }
-                override fun onQueryTextSubmit(query: String): Boolean {
-                    doSomething(query)
-                    return false
-                }
-            })
         }
     }
 }

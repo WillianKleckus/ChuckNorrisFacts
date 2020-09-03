@@ -23,7 +23,8 @@ interface APIDef {
     fun queryForJoke(@Query("query") query : String) : Observable<QueryResult>
 }
 
-class MockedApi{
+// TODO - Comment following class
+class MockedApiDef{
     companion object{
         private val database = setupDatabase()
         private fun setupDatabase() : MutableList<JokeResult> {
