@@ -9,7 +9,7 @@
     <string name="get_random_tv">"Get a random fact"</string>
 
     <!-- UI Messages -->
-    <string name="no_results_tv">"Sorry, here were no results... Try searching for something else"</string>
+    <string name="no_results_tv">"Sorry, there were no results… Try searching for something else"</string>
     <string name="initial_message_tv">"Search for something about our dear Chucky"</string>
 
 

@@ -7,7 +7,6 @@ import android.content.Intent
 import android.util.Log
 import androidx.appcompat.widget.SearchView
 import com.kleckus.chucknorrisfacts.api.API_URL
-import com.kleckus.chucknorrisfacts.api.ChuckNorrisApi
 import com.kleckus.chucknorrisfacts.api.FactoryCNApi
 import com.kleckus.chucknorrisfacts.api.JokeResult
 import com.kleckus.chucknorrisfacts.system.Util.Companion.log

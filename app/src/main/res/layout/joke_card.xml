@@ -16,6 +16,7 @@
         android:layout_marginBottom="5dp"
         android:text="@string/joke_value"
         android:textColor="@color/defaultFontColor"
+        android:textSize="@dimen/big_font_size"
         app:layout_constraintBottom_toTopOf="@+id/shareButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,7 +30,8 @@
         android:padding="5dp"
         android:text="@string/joke_category"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="@dimen/category_font_size"
+        app:layout_constraintBottom_toBottomOf="@+id/shareButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/shareButton" />
 

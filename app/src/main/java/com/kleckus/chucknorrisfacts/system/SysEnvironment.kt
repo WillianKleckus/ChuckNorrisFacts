@@ -2,7 +2,7 @@ package com.kleckus.chucknorrisfacts.system
 
 class SysEnvironment{
     companion object{
-        val currentEnvironment = Environment.PRODUCTION
+        val currentEnvironment = Environment.TESTING
     }
 }
 

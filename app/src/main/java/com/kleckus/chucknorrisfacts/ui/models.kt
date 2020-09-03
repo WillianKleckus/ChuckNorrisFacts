@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.kleckus.chucknorrisfacts.R
+import com.kleckus.chucknorrisfacts.system.ChuckNorrisSystem
 import kotlinx.android.synthetic.main.joke_card.view.*
 
 data class Joke(val jokeStr : String, private val jokeCategories : MutableList<String>){
@@ -16,7 +17,7 @@ data class Joke(val jokeStr : String, private val jokeCategories : MutableList<S
         if(jokeCategories.isEmpty()) return "UNCATEGORIZED"
         var ret = ""
         jokeCategories.forEach { cat ->
-            ret += " ${cat.toUpperCase()}"
+            ret += "  ${cat.toUpperCase()}"
         }
         return ret.trim()
     }
@@ -38,7 +39,18 @@ class JokeAdapter : RecyclerView.Adapter<JokeAdapter.VH>(){
     override fun onBindViewHolder(holder: VH, position: Int) {
         val currentJoke = dataSetList[position]
         val card = holder.itemView
-
+        val jokeLength = currentJoke.jokeStr.length
+        when{
+            jokeLength > 80 -> {
+                card.tvJokeValue.textSize = getDimen(R.dimen.small_font_size)
+            }
+            jokeLength > 60 -> {
+                card.tvJokeValue.textSize = getDimen(R.dimen.medium_font_size)
+            }
+            else -> {
+                card.tvJokeValue.textSize = getDimen(R.dimen.big_font_size)
+            }
+        }
         card.tvJokeValue.text = currentJoke.jokeStr
         card.tvJokeCategory.text = currentJoke.categoriesStr
         card.shareButton.setOnClickListener { share(currentJoke) }
@@ -49,4 +61,7 @@ class JokeAdapter : RecyclerView.Adapter<JokeAdapter.VH>(){
         notifyDataSetChanged()
     }
 
+    private fun getDimen(id : Int) : Float{
+        return ChuckNorrisSystem.currentContext!!.resources.getDimension(id)
+    }
 }
