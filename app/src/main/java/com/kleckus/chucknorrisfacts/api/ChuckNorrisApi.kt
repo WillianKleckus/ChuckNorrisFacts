@@ -2,7 +2,7 @@ package com.kleckus.chucknorrisfacts.api
 
 import com.google.gson.GsonBuilder
 import com.kleckus.chucknorrisfacts.system.ChuckNorrisSystem
-import com.kleckus.chucknorrisfacts.ui.Joke
+import com.kleckus.chucknorrisfacts.ui.JokeUI
 import io.reactivex.Observable
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -26,18 +26,18 @@ class RealChuckNorrisApi : ChuckNorrisApi{
         return retrofit.create<APIDef>(APIDef::class.java)
     }
 
-    private fun getJokeResults(query : String) : Observable<JokeResult> {
+    private fun getJoke(query : String) : Observable<Joke> {
         return service.queryForJoke(query).flatMap { queryResult ->
             Observable.fromIterable(queryResult.result)
         }
     }
 
-    override fun queryForJoke(query : String) : Observable<Joke> {
-        ChuckNorrisSystem.clearLoadedJokeResults()
-        return getJokeResults(query)
-            .flatMap { jokeResult ->
-                ChuckNorrisSystem.addToLoadedJokeResults(jokeResult)
-                Observable.just(Joke(jokeResult.value, jokeResult.categories))
+    override fun queryForJoke(query : String) : Observable<JokeUI> {
+        ChuckNorrisSystem.clearLoadedJokes()
+        return getJoke(query)
+            .flatMap { joke ->
+                ChuckNorrisSystem.addToLoadedJokes(joke)
+                Observable.just(JokeUI(joke.value, joke.categories))
             }
     }
 }

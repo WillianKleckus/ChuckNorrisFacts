@@ -1,11 +1,11 @@
 package com.kleckus.chucknorrisfacts.api
 
 import com.kleckus.chucknorrisfacts.system.Environment
-import com.kleckus.chucknorrisfacts.ui.Joke
+import com.kleckus.chucknorrisfacts.ui.JokeUI
 import io.reactivex.Observable
 
 interface ChuckNorrisApi{
-    fun queryForJoke(query : String) : Observable<Joke>
+    fun queryForJoke(query : String) : Observable<JokeUI>
 }
 
 class FactoryCNApi{

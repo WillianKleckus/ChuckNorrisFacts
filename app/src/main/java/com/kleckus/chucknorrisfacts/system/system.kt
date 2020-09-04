@@ -3,12 +3,10 @@ package com.kleckus.chucknorrisfacts.system
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
-import android.content.Intent
-import com.kleckus.chucknorrisfacts.api.API_URL
 import com.kleckus.chucknorrisfacts.api.FactoryCNApi
-import com.kleckus.chucknorrisfacts.api.JokeResult
+import com.kleckus.chucknorrisfacts.api.Joke
 import com.kleckus.chucknorrisfacts.system.Util.Companion.log
-import com.kleckus.chucknorrisfacts.ui.Joke
+import com.kleckus.chucknorrisfacts.ui.JokeUI
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -17,11 +15,11 @@ class ChuckNorrisSystem : Application(){
         var currentContext : Context? = null
         var sharer = Sharer()
         private val api = FactoryCNApi.createApi(Environment.PRODUCTION)
-        private val loadedJokeResults = mutableListOf<JokeResult>()
+        private val loadedJoke = mutableListOf<Joke>()
 
         @SuppressLint("CheckResult")
-        fun queryForJoke(text : String, then : (jokeList : MutableList<Joke>) -> Unit){
-            val jokeList = mutableListOf<Joke>()
+        fun queryForJoke(text : String, then : (jokeUIList : MutableList<JokeUI>) -> Unit){
+            val jokeList = mutableListOf<JokeUI>()
             api.queryForJoke(text)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -32,8 +30,8 @@ class ChuckNorrisSystem : Application(){
                 )
         }
 
-        fun clearLoadedJokeResults(){ loadedJokeResults.clear() }
-        fun addToLoadedJokeResults(jokeResult : JokeResult){ loadedJokeResults.add(jokeResult) }
-        fun getLoadedJokes(): MutableList<JokeResult>{return loadedJokeResults}
+        fun clearLoadedJokes(){ loadedJoke.clear() }
+        fun addToLoadedJokes(joke : Joke){ loadedJoke.add(joke) }
+        fun getLoadedJokes(): MutableList<Joke>{return loadedJoke}
     }
 }

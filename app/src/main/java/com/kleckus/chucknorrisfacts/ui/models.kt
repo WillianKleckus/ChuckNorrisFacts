@@ -8,7 +8,7 @@ import com.kleckus.chucknorrisfacts.R
 import com.kleckus.chucknorrisfacts.system.ChuckNorrisSystem
 import kotlinx.android.synthetic.main.joke_card.view.*
 
-data class Joke(val jokeStr : String, private val jokeCategories : MutableList<String>){
+data class JokeUI(val jokeStr : String, private val jokeCategories : MutableList<String>){
     val categoriesStr : String
     init{
         categoriesStr = listToString()
@@ -24,8 +24,8 @@ data class Joke(val jokeStr : String, private val jokeCategories : MutableList<S
 }
 
 class JokeAdapter : RecyclerView.Adapter<JokeAdapter.VH>(){
-    private var dataSetList = mutableListOf<Joke>()
-    var share : (joke : Joke) -> Unit = {}
+    private var dataSetList = mutableListOf<JokeUI>()
+    var share : (jokeUI : JokeUI) -> Unit = {}
     class VH (itemView : View) : RecyclerView.ViewHolder(itemView) {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
@@ -56,7 +56,7 @@ class JokeAdapter : RecyclerView.Adapter<JokeAdapter.VH>(){
         card.shareButton.setOnClickListener { share(currentJoke) }
     }
 
-    fun changeDataSet(list : MutableList<Joke>){
+    fun changeDataSet(list : MutableList<JokeUI>){
         dataSetList = list
         notifyDataSetChanged()
     }
