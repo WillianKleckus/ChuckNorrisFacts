@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun queryForJoke(text : String){
-        ChuckNorrisSystem.queryForJoke(text){ jokeList ->
+        ChuckNorrisSystem.queryForJoke(text) { jokeList ->
             if(jokeList.isEmpty()) showNoResultsMessage()
             rvAdapter.changeDataSet(jokeList)
         }

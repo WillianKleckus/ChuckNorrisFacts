@@ -5,7 +5,6 @@ import android.app.Application
 import android.content.Context
 import com.kleckus.chucknorrisfacts.api.FactoryCNApi
 import com.kleckus.chucknorrisfacts.api.Joke
-import com.kleckus.chucknorrisfacts.system.Util.Companion.log
 import com.kleckus.chucknorrisfacts.ui.JokeUI
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -31,8 +30,11 @@ class ChuckNorrisSystem : Application(){
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { joke -> jokeList.add(joke) },
-                    { error -> log(error.message.toString()) },
-                    { then(jokeList)}
+                    { error ->
+                        ErrorHandler.handleError(error.message.toString())
+                        then(jokeList)
+                    },
+                    { then(jokeList) }
                 )
         }
 
