@@ -15,6 +15,7 @@ import io.reactivex.schedulers.Schedulers
 class ChuckNorrisSystem : Application(){
     companion object{
         var currentContext : Context? = null
+        var sharer = Sharer()
         private val api = FactoryCNApi.createApi(Environment.PRODUCTION)
         private val loadedJokeResults = mutableListOf<JokeResult>()
 
@@ -33,31 +34,6 @@ class ChuckNorrisSystem : Application(){
 
         fun clearLoadedJokeResults(){ loadedJokeResults.clear() }
         fun addToLoadedJokeResults(jokeResult : JokeResult){ loadedJokeResults.add(jokeResult) }
-
-        fun shareJoke(joke : Joke){
-            loadedJokeResults.forEach { jokeResult ->
-                if(jokeResult.value == joke.jokeStr){
-                    doShare(jokeResult)
-                    return
-                }
-            }
-            log("Something went wrong")
-        }
-
-        private fun doShare(jokeResult: JokeResult){
-            if(currentContext == null){
-                log("Context is null, something went wrong")
-                return
-            }
-            val message = "${jokeResult.value}\n\nJoke url: ${jokeResult.url}\nFind more at: $API_URL"
-
-            val sendIntent = Intent().apply {
-                action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, message)
-                type = "text/plain"
-            }
-            val shareIntent = Intent.createChooser(sendIntent, null)
-            currentContext!!.startActivity(shareIntent)
-        }
+        fun getLoadedJokes(): MutableList<JokeResult>{return loadedJokeResults}
     }
 }

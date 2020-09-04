@@ -7,7 +7,6 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kleckus.chucknorrisfacts.R
 import com.kleckus.chucknorrisfacts.system.ChuckNorrisSystem
-import com.kleckus.chucknorrisfacts.system.ChuckNorrisSystem.Companion.shareJoke
 import com.kleckus.chucknorrisfacts.system.Util.Companion.onFinnish
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -40,7 +39,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initializeRV(){
         rvAdapter = JokeAdapter()
-        rvAdapter.share = ::shareJoke
+        rvAdapter.share = { joke -> ChuckNorrisSystem.sharer.shareJoke(joke) }
         rvJokeCard.adapter = rvAdapter
         rvJokeCard.layoutManager = LinearLayoutManager(this)
     }
