@@ -14,8 +14,14 @@ class ChuckNorrisSystem : Application(){
     companion object{
         var currentContext : Context? = null
         var sharer = Sharer()
-        private val api = FactoryCNApi.createApi(Environment.PRODUCTION)
+
+        private var api = FactoryCNApi.createApi(Environment.PRODUCTION)
         private val loadedJoke = mutableListOf<Joke>()
+
+        fun changeAppEnvironment(environment : Environment){
+            clearLoadedJokes()
+            api = FactoryCNApi.createApi(environment)
+        }
 
         @SuppressLint("CheckResult")
         fun queryForJoke(text : String, then : (jokeUIList : MutableList<JokeUI>) -> Unit){
