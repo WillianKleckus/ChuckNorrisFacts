@@ -5,6 +5,7 @@ import com.kleckus.chucknorrisfacts.api.API_URL
 import com.kleckus.chucknorrisfacts.api.Joke
 import com.kleckus.chucknorrisfacts.ui.JokeUI
 
+// This is the sharer, called when the user wants to share a joke via other app.
 class Sharer{
     fun shareJoke(jokeUI : JokeUI){
         ChuckNorrisSystem.getLoadedJokes().forEach { joke ->

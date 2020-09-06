@@ -4,6 +4,7 @@ import com.kleckus.chucknorrisfacts.system.ChuckNorrisSystem
 import com.kleckus.chucknorrisfacts.ui.JokeUI
 import io.reactivex.Observable
 
+// Self explanatory, fake API usage
 class MockedChuckNorrisApi : ChuckNorrisApi {
     override fun queryForJoke(query: String): Observable<JokeUI> {
         ChuckNorrisSystem.clearLoadedJokes()

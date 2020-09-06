@@ -4,11 +4,14 @@ import android.widget.Toast
 import com.kleckus.chucknorrisfacts.system.Util.Companion.hasInternetConnection
 import com.kleckus.chucknorrisfacts.system.Util.Companion.log
 
+// This is the error handler:
+// When something bad happens when trying to retrieve data from servers, the app will toast a
+// message to the user with the following info, depending on what has happened.
 class ErrorHandler{
     companion object{
         fun handleError(code : String){
             if(hasInternetConnection()){
-                when(code){
+                when(code.trim()){
                     ErrorCode.SERVER_ERROR.code -> showErrorMessage(ErrorCode.SERVER_ERROR.message)
                     ErrorCode.CLIENT_ERROR.code -> showErrorMessage(ErrorCode.CLIENT_ERROR.message)
                     ErrorCode.CLIENT_TIMEOUT.code -> showErrorMessage(ErrorCode.CLIENT_TIMEOUT.message)

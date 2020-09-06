@@ -9,6 +9,8 @@ private const val CATEGORIES_ENDPOINT = "categories"
 private const val RANDOM_FROM_CATEGORY_ENDPOINT ="random"
 private const val QUERY_ENDPOINT = "search"
 
+// This Interface defines the API from the site.
+// This one requires internet connection to be used.
 interface APIDef {
     @GET(RANDOM_ENDPOINT)
     fun getRandomJoke() : Observable<Joke>
@@ -23,10 +25,12 @@ interface APIDef {
     fun queryForJoke(@Query("query") query : String) : Observable<QueryResult>
 }
 
-// TODO - Comment following class
+// This one is the Mocked API definition.
+// This one doesn't require internet access, but servers only for testing purposes
 class MockedApiDef{
     companion object{
-        private val database = setupDatabase()
+        val database : MutableList<Joke> = setupDatabase()
+
         private fun setupDatabase() : MutableList<Joke> {
             val list = mutableListOf<Joke>()
             list.add(Joke("iconUrl#1", "id#1", mutableListOf(), "url#1", "This is the joke #1!"))

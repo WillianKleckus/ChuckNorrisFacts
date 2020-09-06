@@ -11,6 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 private const val BASE_URL = "https://api.chucknorris.io/jokes/"
 const val API_URL = "api.chucknorris.io"
 
+// The API methods that requires internet connection
 class RealChuckNorrisApi : ChuckNorrisApi{
     private val service : APIDef = establishService()
 

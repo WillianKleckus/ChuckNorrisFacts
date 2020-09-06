@@ -4,6 +4,7 @@
     <!-- Joke Card RV -->
     <string name="joke_value">"Some joke should appear here"</string>
     <string name="joke_category">"Category"</string>
+    <string name="joke_no_category">"UNCATEGORIZED"</string>
 
     <!-- Button -->
     <string name="get_random_tv">"Get a random fact"</string>

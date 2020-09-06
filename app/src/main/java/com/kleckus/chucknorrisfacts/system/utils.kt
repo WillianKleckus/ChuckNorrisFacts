@@ -13,6 +13,7 @@ class Util{
             Log.i("CN", string)
         }
 
+        // Reduces boilerplate code when adding a "onFinnish" listener to a SearchView
         fun SearchView.onFinnish(doSomething : (text : String) -> Unit){
             this.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextChange(newText: String): Boolean {
@@ -25,6 +26,7 @@ class Util{
             })
         }
 
+        // Checks if internet connection is available
         fun hasInternetConnection() : Boolean{
             if(ChuckNorrisSystem.currentContext == null) return false
 

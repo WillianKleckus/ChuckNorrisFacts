@@ -17,11 +17,15 @@ class ChuckNorrisSystem : Application(){
         private var api = FactoryCNApi.createApi(Environment.PRODUCTION)
         private val loadedJoke = mutableListOf<Joke>()
 
+        // This changes the Environment of the app, mainly for testing purposes
         fun changeAppEnvironment(environment : Environment){
             clearLoadedJokes()
             api = FactoryCNApi.createApi(environment)
         }
 
+        // This function starts the search with the user's input keyword at the API database.
+        // Receives in result a list of jokes already UI prepared.
+        // Then expects the calling place to handle the result with the "then" function.
         @SuppressLint("CheckResult")
         fun queryForJoke(text : String, then : (jokeUIList : MutableList<JokeUI>) -> Unit){
             val jokeList = mutableListOf<JokeUI>()
