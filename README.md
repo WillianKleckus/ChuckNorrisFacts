@@ -8,7 +8,7 @@
 
  - The app looks fairly simple. It displays the joke cards and the search field.
 
-![alt text](https://raw.githubusercontent.com/WillianKleckus/ChuckNorrisFacts/master/SampleImages/App%20looks%201.png?token=ANYCR3Z6RY5CXUKRJWQVBCC7KUFRU) ![alt text](https://raw.githubusercontent.com/WillianKleckus/ChuckNorrisFacts/master/SampleImages/App%20looks%202.png?token=ANYCR36XNJEL7QR4VHKHZW27KUFUU)
+![alt text](https://github.com/WillianKleckus/ChuckNorrisFacts/blob/master/SampleImages/App%20looks%201.png?raw=true) ![alt text](https://github.com/WillianKleckus/ChuckNorrisFacts/blob/master/SampleImages/App%20looks%202.png?raw=true)
 
 ## How to:
 ### Search for something: 
