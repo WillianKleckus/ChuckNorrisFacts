@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     private fun initializeLayout(){
         initialMessage.visibility = View.VISIBLE
         noResultsWindow.visibility = View.GONE
+        hideLoading()
     }
 
     private fun initializeRV(){
@@ -50,7 +51,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun queryForJoke(text : String){
+        showLoading()
         ChuckNorrisSystem.queryForJoke(text) { jokeList ->
+            hideLoading()
             if(jokeList.isEmpty()) showNoResultsMessage()
             rvAdapter.changeDataSet(jokeList)
         }
@@ -59,5 +62,13 @@ class MainActivity : AppCompatActivity() {
     private fun showNoResultsMessage() {
         rvAdapter.changeDataSet(mutableListOf())
         noResultsWindow.visibility = View.VISIBLE
+    }
+
+    private fun showLoading(){
+        loadingScreen.visibility = View.VISIBLE
+    }
+
+    private fun hideLoading(){
+        loadingScreen.visibility = View.GONE
     }
 }
