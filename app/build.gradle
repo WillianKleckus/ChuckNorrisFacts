@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.1"
+    buildToolsVersion "30.0.2"
 
     defaultConfig {
         applicationId "com.kleckus.chucknorrisfacts"
@@ -57,5 +57,20 @@ dependencies {
     //RX Java - Kotlin
     implementation "io.reactivex.rxjava2:rxjava:2.2.9"
     implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
+
+    //----------------------------------------------------------------------------------------------
+
+    // DI
+    implementation 'org.kodein.di:kodein-di:7.1.0'
+    implementation 'org.kodein.di:kodein-di-framework-android-x:7.1.0'
+
+    // Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'
+
+    // Project
+    implementation project(":ui")
+    implementation project(":data")
+    implementation project(":domain")
 
 }
