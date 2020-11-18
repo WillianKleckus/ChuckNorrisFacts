@@ -1,5 +1,7 @@
 package com.kleckus.ui
 
+import android.content.Context
+import android.widget.Toast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -22,4 +24,8 @@ fun onMainThread(action: () -> Unit){
 
 fun onIOThread(action: suspend () -> Unit){
     CoroutineScope(Dispatchers.IO).launch { action() }
+}
+
+fun toastMsg(context: Context, message : String){
+    Toast.makeText(context, message, Toast.LENGTH_LONG).show()
 }
