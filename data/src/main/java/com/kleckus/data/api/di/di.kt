@@ -8,8 +8,8 @@ import org.kodein.di.bind
 import org.kodein.di.provider
 
 
-object ServiceModule {
-    operator fun invoke() = DI.Module(name = "internal-service-module") {
+object ApiServiceModule {
+    operator fun invoke() = DI.Module(name = "api-service-module") {
         bind<ApiService>(tag = InjectionTags.CN_API) with provider {
             ChuckNorrisApi()
         }

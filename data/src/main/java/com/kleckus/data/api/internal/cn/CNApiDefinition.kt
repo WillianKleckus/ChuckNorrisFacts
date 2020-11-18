@@ -1,11 +1,10 @@
 package com.kleckus.data.api.internal.cn
 
-import com.kleckus.data.api.internal.API
 import com.kleckus.domain.models.Joke
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-internal interface CNApiDefinition : API {
+internal interface CNApiDefinition {
     companion object{
         private const val RANDOM_ENDPOINT = "random"
         private const val CATEGORIES_ENDPOINT = "categories"

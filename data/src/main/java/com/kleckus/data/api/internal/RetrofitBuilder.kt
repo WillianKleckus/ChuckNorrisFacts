@@ -4,8 +4,6 @@ import com.google.gson.GsonBuilder
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-interface API
-
 internal object RetrofitBuilder{
     private val gson = GsonBuilder().setLenient().create()
 
@@ -16,7 +14,7 @@ internal object RetrofitBuilder{
             .build()
     }
 
-    fun getRetrofitService(retrofit: Retrofit) : API {
-        return retrofit.create<API>(API::class.java)
+    inline fun <reified T> getRetrofitService(retrofit: Retrofit) : T {
+        return retrofit.create<T>(T::class.java)
     }
 }

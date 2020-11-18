@@ -3,72 +3,38 @@ package com.kleckus.chucknorrisfacts.ui
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kleckus.chucknorrisfacts.R
 import com.kleckus.chucknorrisfacts.system.ChuckNorrisSystem
 import com.kleckus.chucknorrisfacts.system.Util.Companion.onFinnish
+import com.kleckus.domain.models.InjectionTags
+import com.kleckus.domain.services.ApiService
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.kodein.di.DI
+import org.kodein.di.DIAware
+import org.kodein.di.android.closestDI
+import org.kodein.di.instance
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), DIAware{
 
-    lateinit var rvAdapter : JokeAdapter
+    override val di : DI by closestDI(this)
+
+    private val service : ApiService by instance(tag = InjectionTags.CN_API)
 
     @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        initialize()
 
-        svBar.onFinnish{text ->
-            clearMessages()
-            queryForJoke(text)
+        CoroutineScope(Dispatchers.IO).launch{
+            val joke = service.getRandomJoke()
+            Log.i("CN Log","Caught joke: ${joke.value}")
         }
-    }
 
-    private fun initialize(){
-        ChuckNorrisSystem.currentContext = this
-        initializeLayout()
-        initializeRV()
-    }
-
-    private fun initializeLayout(){
-        initialMessage.visibility = View.VISIBLE
-        noResultsWindow.visibility = View.GONE
-        hideLoading()
-    }
-
-    private fun initializeRV(){
-        rvAdapter = JokeAdapter()
-        rvAdapter.share = { joke -> ChuckNorrisSystem.sharer.shareJoke(joke) }
-        rvJokeCard.adapter = rvAdapter
-        rvJokeCard.layoutManager = LinearLayoutManager(this)
-    }
-
-    private fun clearMessages(){
-        initialMessage.visibility = View.GONE
-        noResultsWindow.visibility = View.GONE
-    }
-
-    private fun queryForJoke(text : String){
-        showLoading()
-        ChuckNorrisSystem.queryForJoke(text) { jokeList ->
-            hideLoading()
-            if(jokeList.isEmpty()) showNoResultsMessage()
-            rvAdapter.changeDataSet(jokeList)
-        }
-    }
-
-    private fun showNoResultsMessage() {
-        rvAdapter.changeDataSet(mutableListOf())
-        noResultsWindow.visibility = View.VISIBLE
-    }
-
-    private fun showLoading(){
-        loadingScreen.visibility = View.VISIBLE
-    }
-
-    private fun hideLoading(){
-        loadingScreen.visibility = View.GONE
     }
 }
