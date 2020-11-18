@@ -1,5 +1,7 @@
 package com.kleckus.domain.models
 
-enum class InjectionTags{
-    CN_API
+object InjectionTags {
+    enum class Data{
+        CN_API
+    }
 }

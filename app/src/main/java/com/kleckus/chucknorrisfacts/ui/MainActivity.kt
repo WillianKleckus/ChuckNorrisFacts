@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity(), DIAware{
 
     override val di : DI by closestDI(this)
 
-    private val service : ApiService by instance(tag = InjectionTags.CN_API)
+    private val service : ApiService by instance(tag = InjectionTags.Data.CN_API)
 
     @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {

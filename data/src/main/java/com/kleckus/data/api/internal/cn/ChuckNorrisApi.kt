@@ -1,9 +1,9 @@
 package com.kleckus.data.api.internal.cn
 
 import com.kleckus.data.api.internal.RetrofitBuilder
+import com.kleckus.data.api.internal.RetrofitBuilder.getRetrofitService
 import com.kleckus.domain.models.Joke
 import com.kleckus.domain.services.ApiService
-import org.kodein.di.DIAware
 
 internal class ChuckNorrisApi() : ApiService {
     companion object{
@@ -11,9 +11,9 @@ internal class ChuckNorrisApi() : ApiService {
     }
 
     private val service : CNApiDefinition by lazy {
-        RetrofitBuilder.getRetrofitService<CNApiDefinition>(
-            RetrofitBuilder.buildRetrofit(BASE_URL)
-        )
+        RetrofitBuilder
+            .buildRetrofit(BASE_URL)
+            .getRetrofitService()
     }
 
     override suspend fun getRandomJoke(): Joke {

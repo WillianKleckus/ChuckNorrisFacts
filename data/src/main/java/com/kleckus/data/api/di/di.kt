@@ -10,7 +10,7 @@ import org.kodein.di.provider
 
 object ApiServiceModule {
     operator fun invoke() = DI.Module(name = "api-service-module") {
-        bind<ApiService>(tag = InjectionTags.CN_API) with provider {
+        bind<ApiService>(tag = InjectionTags.Data.CN_API) with provider {
             ChuckNorrisApi()
         }
     }

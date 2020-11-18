@@ -14,7 +14,7 @@ internal object RetrofitBuilder{
             .build()
     }
 
-    inline fun <reified T> getRetrofitService(retrofit: Retrofit) : T {
-        return retrofit.create<T>(T::class.java)
+    inline fun <reified T> Retrofit.getRetrofitService() : T {
+        return this.create<T>(T::class.java)
     }
 }
