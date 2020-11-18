@@ -4,7 +4,7 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.kleckus.chucknorrisfacts.system.ChuckNorrisSystem
 import com.kleckus.chucknorrisfacts.ui.JokeUI
-import com.kleckus.chucknorrisfacts.ui.MainActivity
+import com.kleckus.chucknorrisfacts.ui.MainActivityV1
 import com.kleckus.chucknorrisfacts.ui.Util.Companion.getJokeTextSize
 
 import org.junit.Test
@@ -19,7 +19,7 @@ class InstrumentedTesting {
     // This is an instrumented test because it needs access to the context to access the Resources.
     @Test
     fun test_checkUncategorizedReturn() {
-        val scenario = ActivityScenario.launch(MainActivity::class.java)
+        val scenario = ActivityScenario.launch(MainActivityV1::class.java)
         val expectedResult = ChuckNorrisSystem.currentContext!!.getString(R.string.joke_no_category)
 
         val emptyCategoryList = mutableListOf<String>()
@@ -33,7 +33,7 @@ class InstrumentedTesting {
     // This is an instrumented test because it needs access to the context to access the Resources.
     @Test
     fun test_checkCategorizedReturn(){
-        val scenario = ActivityScenario.launch(MainActivity::class.java)
+        val scenario = ActivityScenario.launch(MainActivityV1::class.java)
         val expectedResult = "ANY CATEGORY"
 
         val filledCategoryList = mutableListOf(expectedResult)
@@ -47,7 +47,7 @@ class InstrumentedTesting {
     // This is an instrumented test because it needs access to the context to access the Resources.
     @Test
     fun test_checkTextSizeReturn(){
-        val scenario = ActivityScenario.launch(MainActivity::class.java)
+        val scenario = ActivityScenario.launch(MainActivityV1::class.java)
         val context = ChuckNorrisSystem.currentContext!!
 
         val jokeUISmallFont = JokeUI("A".repeat(81), mutableListOf())

@@ -4,14 +4,10 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.kleckus.chucknorrisfacts.R
-import com.kleckus.chucknorrisfacts.system.ChuckNorrisSystem
-import com.kleckus.chucknorrisfacts.system.Util.Companion.onFinnish
 import com.kleckus.domain.models.InjectionTags
 import com.kleckus.domain.services.ApiService
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main_v1.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,7 +16,7 @@ import org.kodein.di.DIAware
 import org.kodein.di.android.closestDI
 import org.kodein.di.instance
 
-class MainActivity : AppCompatActivity(), DIAware{
+class MainActivityV1 : AppCompatActivity(), DIAware{
 
     override val di : DI by closestDI(this)
 
@@ -29,7 +25,7 @@ class MainActivity : AppCompatActivity(), DIAware{
     @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_main_v1)
 
         CoroutineScope(Dispatchers.IO).launch{
             val joke = service.getRandomJoke()
