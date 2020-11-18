@@ -1,2 +1,5 @@
+include ':data'
+include ':domain'
+include ':ui'
 include ':app'
 rootProject.name = "ChuckNorrisFacts"
