@@ -1,4 +1,4 @@
-package com.kleckus.chucknorrisfacts.wip
+package com.kleckus.chucknorrisfacts
 
 import android.app.Application
 import com.kleckus.data.api.di.ApiServiceModule
