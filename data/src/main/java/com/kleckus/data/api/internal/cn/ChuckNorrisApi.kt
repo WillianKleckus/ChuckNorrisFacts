@@ -20,4 +20,8 @@ internal class ChuckNorrisApi() : ApiService {
         return service.getRandomJoke()
     }
 
+    override suspend fun searchFor(text: String): MutableList<Joke> {
+        val result = service.queryForJoke(text)
+        return result.result
+    }
 }

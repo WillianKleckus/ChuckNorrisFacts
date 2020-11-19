@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Default color pallet -->
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+
+
+    <!-- Chuck Norris color pallet -->
+    <color name="fontColorDark">#222222</color>
+    <color name="itemBorder">#8C8C8C</color>
+</resources>

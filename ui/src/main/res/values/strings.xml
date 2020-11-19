@@ -1,0 +1,10 @@
+<resources>
+
+    <!-- Main Activity -->
+    <string name="search_for_fact">Search a fact here!</string>
+
+    <!-- Joke item -->
+    <string name="joke">Joke</string>
+    <string name="category">Category</string>
+
+</resources>
