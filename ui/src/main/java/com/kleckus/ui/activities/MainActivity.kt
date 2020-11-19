@@ -1,8 +1,10 @@
 package com.kleckus.ui.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import com.kleckus.domain.log
+import com.kleckus.domain.models.Constants.API_URL
 import com.kleckus.domain.models.Joke
 import com.kleckus.ui.R
 import com.kleckus.ui.adapters.JokeAdapter
@@ -38,11 +40,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onResult(jokeList : MutableList<Joke>){
-        Log.i("CN Log", jokeList.toString())
+        log(jokeList.toString())
         adapter.changeDataSet(jokeList)
     }
 
     private fun onSharing(joke : Joke){
-        Log.i("CN Log", "Sharing joke -> ${joke.value}")
+        log("Sharing joke -> ${joke.value}")
+
+        val message = "${joke.value}\n\nJoke url: ${joke.url}\nFind more at: $API_URL"
+        val sendIntent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, message)
+            type = "text/plain"
+        }
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        this.startActivity(shareIntent)
     }
 }
