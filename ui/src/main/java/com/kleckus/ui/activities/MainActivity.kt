@@ -3,6 +3,7 @@ package com.kleckus.ui.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.view.isVisible
 import com.kleckus.domain.log
 import com.kleckus.domain.models.Constants.API_URL
 import com.kleckus.domain.models.Joke
@@ -30,6 +31,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setTextListener(){
         searchView.setStartIconOnClickListener {
+            toggleLoading(true)
             val text = searchView.editText?.text.toString()
             viewModel.searchFor(text)
         }
@@ -42,6 +44,7 @@ class MainActivity : AppCompatActivity() {
     private fun onResult(jokeList : MutableList<Joke>){
         log(jokeList.toString())
         adapter.changeDataSet(jokeList)
+        toggleLoading(false)
     }
 
     private fun onSharing(joke : Joke){
@@ -55,5 +58,12 @@ class MainActivity : AppCompatActivity() {
         }
         val shareIntent = Intent.createChooser(sendIntent, null)
         this.startActivity(shareIntent)
+    }
+
+    private fun toggleLoading(isLoading : Boolean){
+        loadingBar.isVisible = isLoading
+        searchView.clearFocus()
+        searchInput.isFocusableInTouchMode = !isLoading
+        searchInput.isFocusable = !isLoading
     }
 }
