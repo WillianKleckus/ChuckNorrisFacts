@@ -1,4 +1,4 @@
-package com.kleckus.chucknorrisfacts
+package com.kleckus.chucknorrisfacts.app
 
 import android.app.Application
 import com.kleckus.chucknorrisfacts.environment.Environment
@@ -10,12 +10,8 @@ import org.kodein.di.DI
 import org.kodein.di.DIAware
 
 class App : Application(), DIAware{
-
-    companion object{
-        val environment = Environment.DEBUG
-    }
-
     override val di by DI.lazy{
+        import(EnvironmentModule())
         import(ApiServiceModule())
         import(LoggerModule())
         import(ViewModelsModule())

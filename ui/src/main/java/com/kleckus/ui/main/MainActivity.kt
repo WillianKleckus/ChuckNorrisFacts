@@ -13,13 +13,12 @@ import org.kodein.di.DI
 import org.kodein.di.DIAware
 import org.kodein.di.android.di
 import org.kodein.di.instance
-import org.kodein.di.on
 
 class MainActivity : AppCompatActivity(), DIAware {
 
     override val di : DI by di()
 
-    private val viewModel : MainViewModel by on(this).instance()
+    private val viewModel : MainViewModel by instance()
     private val logger : LogService by instance()
 
     private val adapter by lazy { JokeAdapter(this,::onSharing) }
