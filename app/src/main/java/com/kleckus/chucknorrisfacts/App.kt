@@ -15,7 +15,7 @@ class App : Application(), DIAware{
         val environment = Environment.DEBUG
     }
 
-    override val di = DI.lazy{
+    override val di by DI.lazy{
         import(ApiServiceModule())
         import(LoggerModule())
         import(ViewModelsModule())
