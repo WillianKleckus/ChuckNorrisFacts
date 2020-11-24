@@ -6,11 +6,12 @@ import com.kleckus.domain.services.ApiService
 import org.kodein.di.DI
 import org.kodein.di.bind
 import org.kodein.di.provider
+import org.kodein.di.singleton
 
 
 object ApiServiceModule {
     operator fun invoke() = DI.Module(name = "api-service-module") {
-        bind<ApiService>(tag = InjectionTags.Data.CN_API) with provider {
+        bind<ApiService>() with singleton {
             ChuckNorrisApi()
         }
     }
