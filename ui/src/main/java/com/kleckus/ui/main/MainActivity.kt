@@ -3,6 +3,7 @@ package com.kleckus.ui.main
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.view.isInvisible
 import com.kleckus.domain.models.Constants.API_URL
 import com.kleckus.domain.models.Joke
 import com.kleckus.domain.services.LogService
@@ -41,6 +42,7 @@ class MainActivity : AppCompatActivity(), DIAware {
             val text = searchView.editText?.text.toString()
             viewModel.searchFor(text)
 
+            toggleLoading(true)
             logger.log("Searching for -> $text")
         }
     }
@@ -51,6 +53,7 @@ class MainActivity : AppCompatActivity(), DIAware {
 
     private fun onResult(jokeList : MutableList<Joke>){
         logger.log("Received -> $jokeList")
+        toggleLoading(false)
 
         adapter.changeDataSet(jokeList)
     }
@@ -66,5 +69,11 @@ class MainActivity : AppCompatActivity(), DIAware {
         }
         val shareIntent = Intent.createChooser(sendIntent, null)
         this.startActivity(shareIntent)
+    }
+
+    private fun toggleLoading(isLoading : Boolean){
+        searchView.clearFocus()
+        searchView.isEnabled = !isLoading
+        loadingBar.isInvisible = !isLoading
     }
 }
