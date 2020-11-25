@@ -19,7 +19,7 @@ internal interface CNApiDefinition {
     suspend fun getRandomJokeFrom(@Query("category") category : String) : Joke
 
     @GET(CATEGORIES_ENDPOINT)
-    suspend fun getAvailableCategories() : MutableList<String>
+    suspend fun getAvailableCategories() : List<String>
 
     @GET(QUERY_ENDPOINT)
     suspend fun queryForJoke(@Query("query") query : String) : QueryResult
