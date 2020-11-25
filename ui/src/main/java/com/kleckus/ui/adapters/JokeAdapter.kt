@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.joke_item_layout.view.*
 
 class JokeAdapter(private val context : Context, val onSharing : (joke : Joke) -> Unit) : RecyclerView.Adapter<JokeAdapter.VH>() {
 
-    private val dataSet = mutableListOf<Joke>()
+    private var dataSet = listOf<Joke>()
 
     class VH(itemView : View) : RecyclerView.ViewHolder(itemView){}
 
@@ -41,14 +41,13 @@ class JokeAdapter(private val context : Context, val onSharing : (joke : Joke) -
         }
     }
 
-    private fun getCategoriesString(list : MutableList<String>) : String{
+    private fun getCategoriesString(list : List<String>) : String{
         return if(list.isEmpty()) NO_CATEGORY
         else list.joinToString( separator = " - ").toUpperCase()
     }
 
-    fun changeDataSet(jokeList : MutableList<Joke>){
-        dataSet.clear()
-        dataSet.addAll(jokeList)
+    fun changeDataSet(jokeList : List<Joke>){
+        dataSet = jokeList
         notifyDataSetChanged()
     }
 }

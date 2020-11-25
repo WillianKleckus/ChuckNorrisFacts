@@ -1,5 +1,6 @@
 package com.kleckus.data.api.internal.cn
 
+import com.kleckus.data.api.internal.cn.models.QueryResult
 import com.kleckus.domain.models.Joke
 import retrofit2.http.GET
 import retrofit2.http.Query

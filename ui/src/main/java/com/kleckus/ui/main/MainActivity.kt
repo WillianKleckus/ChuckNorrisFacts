@@ -4,12 +4,15 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.view.isInvisible
+import cafe.adriel.dalek.*
 import com.kleckus.domain.models.Constants.CN_API_URL
 import com.kleckus.domain.models.Joke
 import com.kleckus.domain.services.LogService
 import com.kleckus.ui.R
 import com.kleckus.ui.adapters.JokeAdapter
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import org.kodein.di.DI
 import org.kodein.di.DIAware
 import org.kodein.di.android.di
@@ -28,34 +31,57 @@ class MainActivity : AppCompatActivity(), DIAware {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        setupVm()
-        setTextListener()
-        startRecyclerView()
+        setupViews()
     }
 
-    private fun setupVm(){
-        viewModel.onResult = ::onResult
-    }
+    private fun setupViews(){
+        // Adapter
+        recyclerView.adapter = adapter
 
-    private fun setTextListener(){
+        // SearchView
         searchView.setStartIconOnClickListener {
             val text = searchView.editText?.text.toString()
-            viewModel.searchFor(text)
-
-            toggleLoading(true)
-            logger.log("Searching for -> $text")
+            queryForJoke(text)
         }
     }
 
-    private fun startRecyclerView(){
-        recyclerView.adapter = adapter
+    private fun queryForJoke(text : String, scope : CoroutineScope = CoroutineScope(Dispatchers.Main)){
+        logger.log("Searching for -> $text")
+        viewModel.searchFor(text).collectIn(scope){ event ->
+            when(event){
+                is Start -> toggleLoading(true)
+                is Success -> handleSuccess(event.value)
+                is Failure -> handleError(event.exception)
+                is Finish -> toggleLoading(false)
+            }
+        }
     }
 
-    private fun onResult(jokeList : MutableList<Joke>){
-        logger.log("Received -> $jokeList")
-        toggleLoading(false)
+    private fun getRandomJoke(scope : CoroutineScope = CoroutineScope(Dispatchers.Main)){
+        logger.log("Getting random joke")
+        viewModel.getRandomJoke().collectIn(scope){ event ->
+            when(event){
+                is Start -> toggleLoading(true)
+                is Success -> handleSuccess(event.value)
+                is Failure -> handleError(event.exception)
+                is Finish -> toggleLoading(false)
+            }
+        }
+    }
 
-        adapter.changeDataSet(jokeList)
+    private fun handleSuccess(jokeList : List<Joke>){
+        if(jokeList.isEmpty()) {
+            logger.log("No joke found")
+            getRandomJoke()
+        }
+        else{
+            logger.log("Success loading jokes")
+            adapter.changeDataSet(jokeList)
+        }
+    }
+
+    private fun handleError(e : Throwable){
+        logger.logError(e.message.toString(), e)
     }
 
     private fun onSharing(joke : Joke){

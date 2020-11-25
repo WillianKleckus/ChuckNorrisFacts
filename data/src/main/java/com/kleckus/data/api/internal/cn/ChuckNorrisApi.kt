@@ -8,7 +8,7 @@ internal class ChuckNorrisApi(private val service : CNApiDefinition) : ApiServic
         return service.getRandomJoke()
     }
 
-    override suspend fun searchFor(text: String): MutableList<Joke> {
+    override suspend fun searchFor(text: String): List<Joke> {
         val result = service.queryForJoke(text)
         return result.result
     }
