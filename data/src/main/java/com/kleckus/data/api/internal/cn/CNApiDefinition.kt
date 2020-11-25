@@ -5,11 +5,11 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 internal interface CNApiDefinition {
-    companion object{
-        private const val RANDOM_ENDPOINT = "random"
-        private const val CATEGORIES_ENDPOINT = "categories"
-        private const val RANDOM_FROM_CATEGORY_ENDPOINT ="random"
-        private const val QUERY_ENDPOINT = "search"
+    private companion object{
+        const val RANDOM_ENDPOINT = "random"
+        const val CATEGORIES_ENDPOINT = "categories"
+        const val RANDOM_FROM_CATEGORY_ENDPOINT ="random"
+        const val QUERY_ENDPOINT = "search"
     }
     @GET(RANDOM_ENDPOINT)
     suspend fun getRandomJoke() : Joke
