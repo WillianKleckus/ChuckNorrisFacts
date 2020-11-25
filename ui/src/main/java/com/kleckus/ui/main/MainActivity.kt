@@ -1,8 +1,8 @@
 package com.kleckus.ui.main
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.app.ShareCompat
 import androidx.core.view.isInvisible
 import cafe.adriel.dalek.*
 import com.kleckus.domain.models.Constants.CN_API_URL
@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity(), DIAware {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         setupViews()
     }
 
@@ -88,12 +87,12 @@ class MainActivity : AppCompatActivity(), DIAware {
         logger.log("Sharing -> ${joke.value}")
 
         val message = "${joke.value}\n\nJoke url: ${joke.url}\nFind more at: $CN_API_URL"
-        val sendIntent = Intent().apply {
-            action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, message)
-            type = "text/plain"
-        }
-        val shareIntent = Intent.createChooser(sendIntent, null)
+        val shareIntent = ShareCompat.IntentBuilder
+            .from(this)
+            .setType("text/plain")
+            .setText(message)
+            .setChooserTitle("Share joke")
+            .createChooserIntent()
         this.startActivity(shareIntent)
     }
 
