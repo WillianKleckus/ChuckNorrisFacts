@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.view.isInvisible
-import com.kleckus.domain.models.Constants.API_URL
+import com.kleckus.domain.models.Constants.CN_API_URL
 import com.kleckus.domain.models.Joke
 import com.kleckus.domain.services.LogService
 import com.kleckus.ui.R
@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity(), DIAware {
     private fun onSharing(joke : Joke){
         logger.log("Sharing -> ${joke.value}")
 
-        val message = "${joke.value}\n\nJoke url: ${joke.url}\nFind more at: $API_URL"
+        val message = "${joke.value}\n\nJoke url: ${joke.url}\nFind more at: $CN_API_URL"
         val sendIntent = Intent().apply {
             action = Intent.ACTION_SEND
             putExtra(Intent.EXTRA_TEXT, message)

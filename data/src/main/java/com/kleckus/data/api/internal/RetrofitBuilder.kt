@@ -1,16 +1,17 @@
 package com.kleckus.data.api.internal
 
-import com.google.gson.GsonBuilder
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 internal object RetrofitBuilder{
-    private val gson = GsonBuilder().setLenient().create()
+    private val contentType = MediaType.get("application/json")
 
     fun buildRetrofit(baseUrl : String) : Retrofit{
         return Retrofit.Builder()
             .baseUrl(baseUrl)
-            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addConverterFactory(Json{ignoreUnknownKeys = true}.asConverterFactory(contentType))
             .build()
     }
 
