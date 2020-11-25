@@ -9,7 +9,7 @@ class DebugLogger : LogService {
         Log.i(APP_TAG, message)
     }
 
-    override fun logError(message: String) {
+    override fun logError(message: String, error : Throwable) {
         Log.e(APP_TAG, message)
     }
 }
@@ -18,7 +18,7 @@ class ProductionLogger : LogService{
     override fun log(message: String) {
     }
 
-    override fun logError(message: String) {
+    override fun logError(message: String, error : Throwable) {
     }
 
 }
